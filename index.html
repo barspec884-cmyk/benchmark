@@ -5,93 +5,72 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
     <title>Bar SPEC - AMBER PALETTE</title>
     <style>
-        body { 
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; 
-            background: radial-gradient(circle at center, #3d2f0a 0%, #000000 100%); 
-            color: #eee; font-family: serif; overflow: hidden; touch-action: none;
-        }
-        .header h1 { color: #d4af37; font-size: 1.8em; letter-spacing: 8px; margin-top: 25px; text-shadow: 0 0 15px rgba(212,175,55,0.3); }
-
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; overflow: hidden; }
+        .header { text-align: center; padding: 20px 0; }
+        h1 { font-family: 'Georgia', serif; color: #d4af37; margin: 0; font-size: 20px; }
+        
+        /* ボード：網目と十字線のみ */
         #board { 
-            position: relative; width: 88vw; height: 88vw; max-width: 480px; max-height: 480px;
-            background-color: rgba(255, 255, 255, 0.03);
-            background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
-            background-size: 10% 10%; border: 1px solid rgba(212, 175, 55, 0.4);
-            margin-top: 20px; touch-action: none;
+            position: relative; width: 85vw; height: 85vw; max-width: 400px; max-height: 400px; 
+            margin: 30px auto; border: 1px solid #d4af37; 
+            background-color: #111;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+            background-size: 10% 10%;
+            touch-action: none;
         }
 
-        /* 軸ラベルの装飾 */
-        .axis-label { position: absolute; font-size: 11px; color: rgba(212, 175, 55, 0.9); font-weight: bold; letter-spacing: 2px; }
-        .label-top { top: 8px; left: 50%; transform: translateX(-50%); }
-        .label-bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
-        .label-left { top: 50%; left: 8px; transform: translateY(-50%) rotate(-90deg); transform-origin: left top; }
-        .label-right { top: 50%; right: 8px; transform: translateY(-50%) rotate(90deg); transform-origin: right top; }
+        /* 軸ラベル（SMOKYなど）をボードの外に配置 */
+        .axis-label { position: absolute; font-size: 11px; color: #d4af37; font-weight: bold; }
+        .label-top { top: -25px; left: 50%; transform: translateX(-50%); }
+        .label-bottom { bottom: -25px; left: 50%; transform: translateX(-50%); }
+        .label-left { left: -45px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+        .label-right { right: -45px; top: 50%; transform: translateY(-50%) rotate(90deg); }
 
-        /* ボトルのデザイン：ここに画像を復活させました */
-        .bottle {
-            position: absolute; transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center;
-            z-index: 1000; pointer-events: none;
-        }
-        /* 生成したボトル画像をアイコンとして使用 */
-        .bottle img { 
-            width: 30px; height: auto; margin-bottom: 5px; 
-            filter: drop-shadow(0 0 8px rgba(212,175,55,0.6));
-        }
+        /* ボトル */
+        .bottle { position: absolute; transform: translate(-50%, -50%); pointer-events: none; text-align: center; }
+        .bottle img { width: 40px; height: auto; filter: drop-shadow(0 0 10px #d4af37); }
+        .label { display: block; font-size: 12px; color: #000; background: #d4af37; padding: 2px 6px; border-radius: 2px; margin-top: 5px; font-weight: bold; }
 
-        /* 伸縮する金枠ラベル */
-        .label { 
-            display: inline-block; background: rgba(0, 0, 0, 0.85); 
-            color: #d4af37; font-size: 10px; padding: 4px 14px; 
-            border-radius: 3px; border: 1px solid rgba(212,175,55,0.5); 
-            white-space: nowrap; box-shadow: 0 3px 10px rgba(0,0,0,0.6);
-        }
-
+        /* 決定ボタン：ここが確実に押せるように修正しました */
         .submit-btn {
-            margin-top: 35px; padding: 15px 50px; font-size: 1.1em;
-            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-            border: none; border-radius: 30px; color: #000; font-weight: bold;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); letter-spacing: 3px;
+            display: block; width: 80%; max-width: 280px; margin: 40px auto;
+            padding: 18px; background: #d4af37; color: #000; border: none;
+            border-radius: 8px; font-weight: bold; font-size: 18px; 
+            cursor: pointer; position: relative; z-index: 10;
         }
 
+        /* モーダル */
         #modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 100;
         }
-        .modal-content {
-            background: #1a1a1a; padding: 30px; border-radius: 20px; border: 1px solid #d4af37;
-            width: 85%; max-width: 380px; text-align: center;
-        }
-        .modal-content input {
-            width: 100%; margin: 20px 0; padding: 12px; border-radius: 8px;
-            border: 1px solid #333; background: #000; color: #fff; font-size: 18px; box-sizing: border-box;
-        }
+        .modal-content { background: #111; padding: 30px; border-radius: 10px; width: 80%; max-width: 300px; text-align: center; border: 1px solid #d4af37; }
+        #in-user { width: 100%; padding: 12px; margin: 15px 0; background: #222; border: 1px solid #d4af37; color: #fff; font-size: 16px; }
     </style>
 </head>
 <body>
 
-<div class='header'>
-    <h1>AMBER PALETTE</h1>
-</div>
+<div class='header'><h1>AMBER PALETTE</h1></div>
 
 <div id='board'>
     <div class="axis-label label-top">SMOKY</div><div class="axis-label label-bottom">DELICATE</div>
     <div class="axis-label label-left">LIGHT</div><div class="axis-label label-right">RICH</div>
     <div id="drag-bottle" class="bottle" style="left:50%; top:50%;">
-        <img src="bottle_image.webp.webp" alt="bottle">
-        <span class="label">MY SPEC</span>
+        <img src="bottle_image.webp" alt="bottle" onerror="this.src='https://placehold.jp/d4af37/000000/40x80.png?text=YAMAZAKI'">
+        <span class="label">山崎 NAS</span>
     </div>
 </div>
 
-<button class="submit-btn" onclick="openModal()">位置を決定</button>
+<button class="submit-btn" onclick="openModal()">この位置で決定</button>
 
 <div id="modal-overlay">
     <div class="modal-content">
-        <h3 style="color:#d4af37; margin:0;">琥珀の地図への刻印</h3>
-        <input type="text" id="in-user" placeholder="お名前">
-        <button onclick="finalSend()" id="send-btn" style="background:#d4af37; color:#000; border:none; padding:15px; width:100%; border-radius:10px; font-weight:bold; font-size:16px;">送信する</button>
-        <button onclick="closeModal()" style="background:none; color:#777; border:none; margin-top:20px;">戻る</button>
+        <h3 style="color:#d4af37; margin:0;">お名前を入力</h3>
+        <input type="text" id="in-user" placeholder="Name">
+        <button onclick="finalSend()" id="send-btn" style="background:#d4af37; color:#000; border:none; padding:15px; width:100%; font-weight:bold; border-radius:5px;">送信する</button>
+        <button onclick="closeModal()" style="background:none; color:#777; border:none; margin-top:20px;">Cancel</button>
     </div>
 </div>
 
@@ -102,55 +81,8 @@
     let xlRich = 0, xlSmoky = 0;
 
     function handleMove(e) {
-        e.preventDefault(); 
         const rect = board.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
         let x = ((clientX - rect.left) / rect.width) * 100;
-        let y = ((clientY - rect.top) / rect.height) * 100;
-
-        x = Math.max(0, Math.min(100, x));
-        y = Math.max(0, Math.min(100, y));
-
-        xlRich = Math.round(x - 50);
-        xlSmoky = Math.round(50 - y);
-
-        dot.style.left = x + '%';
-        dot.style.top = y + '%';
-    }
-
-    board.addEventListener('touchstart', handleMove, {passive: false});
-    board.addEventListener('touchmove', handleMove, {passive: false});
-    board.addEventListener('mousedown', (e) => {
-        handleMove(e);
-        const mouseMoveHandler = (me) => handleMove(me);
-        const mouseUpHandler = () => {
-            window.removeEventListener('mousemove', mouseMoveHandler);
-            window.removeEventListener('mouseup', mouseUpHandler);
-        };
-        window.addEventListener('mousemove', mouseMoveHandler);
-        window.addEventListener('mouseup', mouseUpHandler);
-    });
-
-    function openModal() { document.getElementById('modal-overlay').style.display = 'flex'; }
-    function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
-
-    async function finalSend() {
-        const user = document.getElementById('in-user').value || "匿名";
-        const btn = document.getElementById('send-btn');
-        btn.innerText = "送信中..."; btn.disabled = true;
-
-        const payload = { role: "調査", user: user, brand: "AMBER_PALETTE", rich: xlRich, smoky: xlSmoky };
-
-        try {
-            await fetch(GAS_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
-            window.location.href = "view.html";
-        } catch (e) {
-            alert("エラーが発生しました");
-            btn.innerText = "再試行"; btn.disabled = false;
-        }
-    }
-</script>
-</body>
-</html>
+        let y = ((clientY - rect.top) / rect.height) *
