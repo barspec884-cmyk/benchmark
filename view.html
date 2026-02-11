@@ -6,7 +6,6 @@
     <title>Bar SPEC - 山崎の居所調査結果</title>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
     <style>
-        /* スタイルはそのまま維持 */
         body { 
             display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; 
             background: radial-gradient(circle at center, #3d2f0a 0%, #000000 100%); 
@@ -14,107 +13,102 @@
         }
         .header-title {
             margin-top: 45px; color: #d4af37; font-size: 2.2em; letter-spacing: 12px; font-weight: 500; text-align: center;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
         }
         .matrix-container { position: relative; margin: 40px auto 80px; }
         .matrix-board { 
             position: relative; width: min(90vw, 620px); aspect-ratio: 1/1; 
             border: 1px solid #d4af37; background-color: #fdf5e6; 
-            background-image: linear-gradient(rgba(184, 134, 11, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(184, 134, 11, 0.08) 1px, transparent 1px);
-            background-size: 5% 5%; box-shadow: 0 0 60px rgba(0,0,0,0.8); overflow: hidden; 
+            background-image: linear-gradient(rgba(184, 134, 11, 0.08) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(184, 134, 11, 0.08) 1px, transparent 1px);
+            background-size: 5% 5%; box-shadow: 0 0 60px rgba(0,0,0,0.8);
         }
-        .axis-label { position: absolute; pointer-events: none; z-index: 50; color: #d4af37; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); border: 1px solid rgba(212, 175, 55, 0.6); text-transform: uppercase; letter-spacing: 2px; font-size: 10px; }
+        .axis-label {
+            position: absolute; pointer-events: none; z-index: 50; color: #d4af37;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); 
+            border: 1px solid rgba(212, 175, 55, 0.6); text-transform: uppercase; font-size: 10px;
+        }
         .label-top { top: 0; left: 50%; transform: translateX(-50%); padding: 3px 20px; border-radius: 0 0 10px 10px; }
         .label-bottom { bottom: 0; left: 50%; transform: translateX(-50%); padding: 3px 20px; border-radius: 10px 10px 0 0; }
-        .label-left { left: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; text-orientation: upright; padding: 15px 3px; border-radius: 0 8px 8px 0; }
-        .label-right { right: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; text-orientation: upright; padding: 15px 3px; border-radius: 8px 0 0 8px; }
+        .label-left { left: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; padding: 15px 3px; border-radius: 0 8px 8px 0; }
+        .label-right { right: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; padding: 15px 3px; border-radius: 8px 0 0 8px; }
 
-        .bottle { position: absolute; transform: translate(-50%, -50%); text-align: center; width: 50px; transition: all 0.5s ease; z-index: 10; }
-        .bottle img { width: 25px; height: auto; }
-        .label { display: block; background: rgba(0, 0, 0, 0.85); color: #d4af37; font-size: 9px; padding: 1px 4px; border-radius: 2px; margin-top: 2px; border: 1px solid rgba(212,175,55,0.3); white-space: nowrap; }
-        
-        /* 山崎のドット（投稿者データ）用のスタイル */
-        .dot { width: 12px; height: 12px; background: #d4af37; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 8px #d4af37; cursor: pointer; }
-        
-        .benchmark-bottle { z-index: 1 !important; opacity: 0.25; filter: grayscale(0.5); pointer-events: none; }
-        .benchmark-label { background: transparent !important; color: #888 !important; border: none !important; font-weight: bold; font-style: italic; }
+        .bottle { 
+            position: absolute; transform: translate(-50%, -50%); 
+            display: flex; flex-direction: column; align-items: center; 
+            width: auto; transition: all 0.5s ease; z-index: 10; 
+        }
+        .dot { 
+            width: 12px; height: 12px; background: #d4af37; border-radius: 50%; 
+            border: 1px solid #fff; box-shadow: 0 0 8px #d4af37; margin-bottom: 4px;
+        }
+        .label { 
+            display: inline-block; background: rgba(0, 0, 0, 0.85); 
+            color: #d4af37; font-size: 10px; padding: 4px 12px; 
+            border-radius: 3px; border: 1px solid rgba(212,175,55,0.4); 
+            white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .benchmark-bottle { z-index: 1 !important; opacity: 0.4; }
+        .benchmark-label { background: transparent !important; color: #888 !important; border: none !important; font-style: italic; }
     </style>
 </head>
-
 <body>
-
-    <div class="header-title" id="page-title">AMBER PALETTE</div>
-
+    <div class="header-title">MAJORITY&nbsp;</div>
     <div class="matrix-container">
-        <div class="axis-label label-top">Smoky</div>
-        <div class="axis-label label-bottom">Delicate</div>
-        <div class="axis-label label-left">Light</div>
-        <div class="axis-label label-right">Rich</div>
+        <div class="axis-label label-top">Smoky</div><div class="axis-label label-bottom">Delicate</div>
+        <div class="axis-label label-left">Light</div><div class="axis-label label-right">Rich</div>
         <div class="matrix-board" id="board"></div>
     </div>
 
-    <script>
-        const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbxOyZZfvdOWhTfdjVlNBkDk6axBYHb6RoZU9MSGG8dlo58CU46NUfAjY1BF_-6LZAEFog/exec";
+<script>
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxOyZZfvdOWhTfdjVlNBkDk6axBYHb6RoZU9MSGG8dlo58CU46NUfAjY1BF_-6LZAEFog/exec";
 
         async function loadData() {
             const board = document.getElementById('board');
-            board.innerHTML = '<div style="color:#d4af37; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:11px; letter-spacing:2px;">ANALYZING...</div>';
-            
-            // URLから ?brand=yamazaki を探す
-            const params = new URLSearchParams(window.location.search);
-            const filterBrand = params.get('brand');
-
+            board.innerHTML = '<div style="color:#d4af37; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">LOADING...</div>';
             try {
-                const response = await fetch(GAS_BASE_URL); // Everyone'sデータを取得
+                const response = await fetch(GAS_URL);
                 const data = await response.json();
-                render(data, filterBrand);
+                render(data);
             } catch (e) {
-                board.innerHTML = '<div style="color:#ff4444; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">CONNECTION ERROR</div>';
+                board.innerHTML = '<div style="color:red; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">ERROR</div>';
             }
         }
 
-        function render(data, filterBrand) {
+        function render(data) {
             const board = document.getElementById('board');
-            board.innerHTML = '';
-
-            // タイトルの変更
-            if(filterBrand === '山崎' || filterBrand === 'yamazaki') {
-                document.getElementById('page-title').innerText = "YAMAZAKI MAJORITY";
-            }
-
-            // Benchmarkの表示
+            board.innerHTML = `
+                <div style="position:absolute; width:100%; height:1px; top:50%; left:0; background:rgba(184,134,11,0.2);"></div>
+                <div style="position:absolute; height:100%; width:1px; left:50%; top:0; background:rgba(184,134,11,0.2);"></div>
+            `;
+            
+            // 1. 真ん中にBenchmark（山崎の公式位置）を表示
             const benchmark = document.createElement('div');
             benchmark.className = 'bottle benchmark-bottle';
             benchmark.style.left = '50%'; benchmark.style.top = '50%';
-            benchmark.innerHTML = `<img src="JAPANESE/yamazaki.webp" onerror="this.src='https://via.placeholder.com/40x80?text=Y'"><span class="label benchmark-label">Benchmark</span>`;
+            benchmark.innerHTML = `<img src="JAPANESE/yamazaki.webp" style="width:25px; margin-bottom:2px;"><span class="label benchmark-label">Benchmark</span>`;
             board.appendChild(benchmark);
 
-            data.forEach(whiskey => {
-                // ★ フィルターがある場合、一致しない銘柄は飛ばす
-                if (filterBrand && whiskey.brand !== "山崎") return;
-
-                const bottleEl = document.createElement('div');
-                bottleEl.className = 'bottle';
-                bottleEl.style.left = (50 + Number(whiskey.rich)) + '%';
-                bottleEl.style.top = (50 - Number(whiskey.smoky)) + '%';
-                
-                // 山崎モードの時はドットで表示、それ以外は画像
-                if (filterBrand) {
-                    bottleEl.innerHTML = `<div class="dot"></div><span class="label">${whiskey.user}</span>`;
-                } else {
-                    const imgSrc = whiskey.image || 'JAPANESE/sample-Bottle.webp';
-                    bottleEl.innerHTML = `<img src="${imgSrc}" onerror="this.style.display='none'"><span class="label">${whiskey.brand}</span>`;
+            // 2. 取得したデータから「山崎」の調査データだけを表示
+            data.forEach(item => {
+                // ここで「山崎」かつ「roleが調査」のものだけに絞り込みます
+                if (item.brand === "山崎" && item.role === "調査") {
+                    const bottleEl = document.createElement('div');
+                    bottleEl.className = 'bottle';
+                    bottleEl.style.left = (50 + Number(item.rich)) + '%';
+                    bottleEl.style.top = (50 - Number(item.smoky)) + '%';
+                    
+                    // 名前の横に余白を持たせたラベルを表示
+                    bottleEl.innerHTML = `<div class="dot"></div><span class="label">${item.user}</span>`;
+                    
+                    // クリックでコメント表示
+                    bottleEl.onclick = () => {
+                        if(item.comment) alert("【" + item.user + "さんの感想】\n" + item.comment);
+                    };
+                    
+                    board.appendChild(bottleEl);
                 }
-
-                bottleEl.onclick = () => { 
-                    if(whiskey.note || whiskey.comment) {
-                        alert("【" + whiskey.brand + " by " + whiskey.user + "】\n\n" + (whiskey.note || whiskey.comment)); 
-                    }
-                };
-                board.appendChild(bottleEl);
             });
         }
-
         window.onload = loadData;
     </script>
 </body>
