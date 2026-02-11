@@ -4,60 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bar SPEC - AMBER PALETTE MAJORITY</title>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
     <style>
         body { 
             display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; 
-            background: radial-gradient(circle at center, #3d2f0a 0%, #000000 100%); 
-            color: #eee; font-family: 'EB Garamond', serif; 
+            background: #000; /* 背景を真っ黒にして高級感を出す */
+            color: #eee; font-family: serif; 
         }
         .header-title {
-            margin-top: 45px; color: #d4af37; font-size: 2.2em; letter-spacing: 12px; font-weight: 500; text-align: center;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            margin-top: 40px; color: #d4af37; font-size: 1.8em; letter-spacing: 8px; text-align: center;
         }
-        .matrix-container { position: relative; margin: 40px auto 80px; }
+        .matrix-container { position: relative; margin: 40px auto; }
         .matrix-board { 
-            position: relative; width: min(90vw, 620px); aspect-ratio: 1/1; 
-            border: 1px solid #d4af37; background-color: #fdf5e6; 
-            background-image: linear-gradient(rgba(184, 134, 11, 0.08) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(184, 134, 11, 0.08) 1px, transparent 1px);
-            background-size: 5% 5%; box-shadow: 0 0 60px rgba(0,0,0,0.8);
+            position: relative; width: min(92vw, 500px); aspect-ratio: 1/1; 
+            border: 1px solid #d4af37; background-color: #111; /* 背景を暗くしてグリッドを際立たせる */
+            background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+            background-size: 10% 10%;
         }
-        .axis-label {
-            position: absolute; pointer-events: none; z-index: 50; color: #d4af37;
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); 
-            border: 1px solid rgba(212, 175, 55, 0.6); text-transform: uppercase; font-size: 10px;
-        }
-        .label-top { top: 0; left: 50%; transform: translateX(-50%); padding: 3px 20px; border-radius: 0 0 10px 10px; }
-        .label-bottom { bottom: 0; left: 50%; transform: translateX(-50%); padding: 3px 20px; border-radius: 10px 10px 0 0; }
-        .label-left { left: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; padding: 15px 3px; border-radius: 0 8px 8px 0; }
-        .label-right { right: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; padding: 15px 3px; border-radius: 8px 0 0 8px; }
+        
+        .axis-label { position: absolute; color: #d4af37; font-size: 10px; font-weight: bold; }
+        .label-top { top: -25px; left: 50%; transform: translateX(-50%); }
+        .label-bottom { bottom: -25px; left: 50%; transform: translateX(-50%); }
+        .label-left { left: -45px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+        .label-right { right: -45px; top: 50%; transform: translateY(-50%) rotate(90deg); }
 
         .bottle { 
             position: absolute; transform: translate(-50%, -50%); 
-            display: flex; flex-direction: column; align-items: center; 
-            width: auto; transition: all 0.5s ease; z-index: 10; 
+            display: flex; flex-direction: column; align-items: center; z-index: 10; 
         }
         .dot { 
-            width: 12px; height: 12px; background: #d4af37; border-radius: 50%; 
-            border: 1px solid #fff; box-shadow: 0 0 8px #d4af37; margin-bottom: 4px;
+            width: 8px; height: 8px; background: #fff; border-radius: 50%; 
+            box-shadow: 0 0 10px #d4af37; margin-bottom: 2px;
         }
         .label { 
-            display: inline-block; background: rgba(0, 0, 0, 0.85); 
-            color: #d4af37; font-size: 10px; padding: 4px 12px; 
-            border-radius: 3px; border: 1px solid rgba(212,175,55,0.4); 
-            white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            background: rgba(212, 175, 55, 0.9); color: #000; font-size: 9px; 
+            padding: 1px 5px; border-radius: 2px; white-space: nowrap; font-weight: bold;
         }
-        .benchmark-bottle { z-index: 1 !important; opacity: 0.5; }
-        .benchmark-label { background: transparent !important; color: #888 !important; border: none !important; font-style: italic; }
+
+        /* 基準点（センター）のデザイン */
+        .benchmark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; opacity: 0.7; }
+        .benchmark img { width: 30px; filter: grayscale(1); }
+        .benchmark span { display: block; font-size: 9px; color: #777; }
     </style>
 </head>
 <body>
-    <div class="header-title">SPEC&nbsp;MAJORITY</div>
+    <div class="header-title">AMBER MAP</div>
     <div class="matrix-container">
-        <div class="axis-label label-top">Smoky</div><div class="axis-label label-bottom">Delicate</div>
-        <div class="axis-label label-left">Light</div><div class="axis-label label-right">Rich</div>
-        <div class="matrix-board" id="board"></div>
+        <div class="axis-label label-top">SMOKY</div><div class="axis-label label-bottom">DELICATE</div>
+        <div class="axis-label label-left">LIGHT</div><div class="axis-label label-right">RICH</div>
+        <div class="matrix-board" id="board">
+            <div class="benchmark">
+                <img src="bottle_image.webp" alt="center">
+                <span>CENTER</span>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -65,41 +65,31 @@
 
         async function loadData() {
             const board = document.getElementById('board');
-            board.innerHTML = '<div style="color:#d4af37; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">LOADING...</div>';
             try {
                 const response = await fetch(GAS_URL);
                 const data = await response.json();
                 render(data);
             } catch (e) {
-                board.innerHTML = '<div style="color:red; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">ERROR</div>';
+                console.error("データ取得エラー", e);
             }
         }
 
         function render(data) {
             const board = document.getElementById('board');
-            board.innerHTML = `
-                <div style="position:absolute; width:100%; height:1px; top:50%; left:0; background:rgba(184,134,11,0.2);"></div>
-                <div style="position:absolute; height:100%; width:1px; left:50%; top:0; background:rgba(184,134,11,0.2);"></div>
+            // 十字線のみ追加（既存のベンチマークは残す）
+            board.innerHTML += `
+                <div style="position:absolute; width:100%; height:1px; top:50%; left:0; background:rgba(212,175,55,0.2);"></div>
+                <div style="position:absolute; height:100%; width:1px; left:50%; top:0; background:rgba(212,175,55,0.2);"></div>
             `;
             
-            // ファイル名を「bottle_image.webp.webp」に修正
-            const benchmark = document.createElement('div');
-            benchmark.className = 'bottle benchmark-bottle';
-            benchmark.style.left = '50%'; benchmark.style.top = '50%';
-            benchmark.innerHTML = `<img src="bottle_image.webp" style="width:35px; margin-bottom:2px;"><span class="label benchmark-label">Benchmark</span>`;
-            board.appendChild(benchmark);
-
             data.forEach(item => {
-                if (item.brand === "山崎" && item.role === "調査") {
+                // 条件を「山崎 NAS」に一致させる
+                if (item.brand === "山崎 NAS" && item.role === "調査") {
                     const bottleEl = document.createElement('div');
                     bottleEl.className = 'bottle';
                     bottleEl.style.left = (50 + Number(item.rich)) + '%';
                     bottleEl.style.top = (50 - Number(item.smoky)) + '%';
                     bottleEl.innerHTML = `<div class="dot"></div><span class="label">${item.user}</span>`;
-                    
-                    bottleEl.onclick = () => {
-                        if(item.comment) alert("【" + item.user + "さんの感想】\n" + item.comment);
-                    };
                     board.appendChild(bottleEl);
                 }
             });
@@ -107,5 +97,4 @@
         window.onload = loadData;
     </script>
 </body>
-
 </html>
