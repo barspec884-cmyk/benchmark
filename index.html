@@ -28,13 +28,11 @@
         }
         .axis-x { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: rgba(212, 175, 55, 0.4); z-index: 1; }
         .axis-y { position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: rgba(212, 175, 55, 0.4); z-index: 1; }
-        
         .label-text { position: absolute; font-size: 11px; color: rgba(212, 175, 55, 0.8); letter-spacing: 2px; font-weight: bold; z-index: 50; }
         .label-top { top: 5px; left: 50%; transform: translateX(-50%); }
         .label-bottom { bottom: 5px; left: 50%; transform: translateX(-50%); }
         .label-left { top: 50%; left: 5px; transform: translateY(-50%) rotate(-90deg); transform-origin: left top; }
         .label-right { top: 50%; right: 5px; transform: translateY(-50%) rotate(90deg); transform-origin: right top; }
-
         .bottle {
             position: absolute; transform: translate(-50%, -50%);
             width: 44px; height: 44px; background: #d4af37; border: 2px solid #fff;
@@ -42,14 +40,12 @@
             display: flex; align-items: center; justify-content: center; z-index: 2000;
         }
         .bottle::after { content: '山崎'; color: #000; font-size: 11px; font-weight: bold; }
-
         .submit-btn {
             margin-top: 25px; padding: 15px 40px; font-size: 1.1em;
             background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
             border: none; border-radius: 30px; color: #000; font-weight: bold;
             cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
-
         #modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center;
@@ -119,7 +115,8 @@
         const user = document.getElementById('in-user').value || "匿名";
         const note = document.getElementById('in-note').value;
         const btn = document.getElementById('send-btn');
-        btn.innerText = "刻印中..."; btn.disabled = true;
+        btn.innerText = "刻印中..."; 
+        btn.disabled = true;
 
         const payload = { 
             role: "調査", user: user, brand: "山崎", rich: xlRich, smoky: xlSmoky, comment: note 
@@ -127,11 +124,12 @@
 
         try {
             await fetch(GAS_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
-            alert("あなたの「山崎」を受理しました！みんなの分布を確認してみましょう。");
+            alert("あなたの「山崎」を刻印しました。みんなとのズレを見てみましょう！");
             window.location.href = "view.html?brand=yamazaki"; 
         } catch (e) {
-            alert("エラーが発生しました。");
-            btn.innerText = "再試行"; btn.disabled = false;
+            alert("送信エラーが発生しました。");
+            btn.innerText = "再試行";
+            btn.disabled = false;
         }
     }
 
