@@ -47,19 +47,19 @@
             border-radius: 3px; border: 1px solid rgba(212,175,55,0.4); 
             white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-        .benchmark-bottle { z-index: 1 !important; opacity: 0.4; }
+        .benchmark-bottle { z-index: 1 !important; opacity: 0.5; }
         .benchmark-label { background: transparent !important; color: #888 !important; border: none !important; font-style: italic; }
     </style>
 </head>
 <body>
-    <div class="header-title">MAJORITY&nbsp;</div>
+    <div class="header-title">YAMAZAKI MAJORITY</div>
     <div class="matrix-container">
         <div class="axis-label label-top">Smoky</div><div class="axis-label label-bottom">Delicate</div>
         <div class="axis-label label-left">Light</div><div class="axis-label label-right">Rich</div>
         <div class="matrix-board" id="board"></div>
     </div>
 
-<script>
+    <script>
         const GAS_URL = "https://script.google.com/macros/s/AKfycbxOyZZfvdOWhTfdjVlNBkDk6axBYHb6RoZU9MSGG8dlo58CU46NUfAjY1BF_-6LZAEFog/exec";
 
         async function loadData() {
@@ -81,30 +81,24 @@
                 <div style="position:absolute; height:100%; width:1px; left:50%; top:0; background:rgba(184,134,11,0.2);"></div>
             `;
             
-            // 1. 真ん中にBenchmark（山崎の公式位置）を表示
+            // オリジナルボトル画像をBenchmarkに設定
             const benchmark = document.createElement('div');
             benchmark.className = 'bottle benchmark-bottle';
             benchmark.style.left = '50%'; benchmark.style.top = '50%';
-            benchmark.innerHTML = `<img src="bottle_image.webp" style="width:25px; margin-bottom:2px;"><span class="label benchmark-label">Benchmark</span>`;
+            benchmark.innerHTML = `<img src="BOTTLE_IMAGE.webp" style="width:35px; margin-bottom:2px;"><span class="label benchmark-label">Benchmark</span>`;
             board.appendChild(benchmark);
 
-            // 2. 取得したデータから「山崎」の調査データだけを表示
             data.forEach(item => {
-                // ここで「山崎」かつ「roleが調査」のものだけに絞り込みます
                 if (item.brand === "山崎" && item.role === "調査") {
                     const bottleEl = document.createElement('div');
                     bottleEl.className = 'bottle';
                     bottleEl.style.left = (50 + Number(item.rich)) + '%';
                     bottleEl.style.top = (50 - Number(item.smoky)) + '%';
-                    
-                    // 名前の横に余白を持たせたラベルを表示
                     bottleEl.innerHTML = `<div class="dot"></div><span class="label">${item.user}</span>`;
                     
-                    // クリックでコメント表示
                     bottleEl.onclick = () => {
                         if(item.comment) alert("【" + item.user + "さんの感想】\n" + item.comment);
                     };
-                    
                     board.appendChild(bottleEl);
                 }
             });
